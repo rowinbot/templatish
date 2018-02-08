@@ -1,6 +1,6 @@
 {
   "name": "templatish",
-  "version": "0.0.2",
+  "version": "0.0.01",
   "description": "Template generator easy to customize",
   "main": "index.js",
   "scripts": {
@@ -28,6 +28,6 @@
     "inquirer": "^5.1.0"
   },
   "bin": {
-    "templatish": "./index.js"
+    "templatish": "index.js"
   }
 }
