@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "pretty": "prettier --single-quote --no-semi --trailing-comma es5 --write '*.js'",
     "patch-release": "npm version patch && npm publish && git push --follow-tags"
   },
   "repository": {
@@ -29,5 +30,8 @@
   },
   "bin": {
     "templatish": "index.js"
+  },
+  "devDependencies": {
+    "prettier": "1.10.2"
   }
 }
