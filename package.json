@@ -4,7 +4,8 @@
   "description": "Template generator easy to customize",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "patch-release": "npm version patch && npm publish && git push --follow-tags"
   },
   "repository": {
     "type": "git",
@@ -22,5 +23,11 @@
   "bugs": {
     "url": "https://github.com/rowinbot/templatish/issues"
   },
-  "homepage": "https://github.com/rowinbot/templatish#readme"
+  "homepage": "https://github.com/rowinbot/templatish#readme",
+  "dependencies": {
+    "inquirer": "^5.1.0"
+  },
+  "bin": {
+    "templatish": "./index.js"
+  }
 }
