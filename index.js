@@ -10,7 +10,7 @@ const QUESTIONS = [
   {
     name: 'project-choice',
     type: 'list',
-    message: 'What template would you like to use?',
+    message: 'Which template would you like to use?',
     choices: CHOICES
   },
   {
@@ -24,10 +24,14 @@ const QUESTIONS = [
   }
 ]
 
-const RED = "\x1b[31m"
-const GREEN = "\x1b[32m"
-const BLUE = "\x1b[36m"
-const RESET_COL = "\x1b[0m"
+const RESET = "\x1b[0m",
+      RED   = "\x1b[31m",
+      GREEN = "\x1b[32m",
+      BLUE  = "\x1b[36m"
+
+const REDISH   = string => RED   + string + RESET,
+      GREENISH = string => GREEN + string + RESET,
+      BLUEISH  = string => BLUE  + string + RESET
 
 inquirer.prompt(QUESTIONS)
   .then(answers => {
@@ -38,17 +42,13 @@ inquirer.prompt(QUESTIONS)
     try {
       fs.mkdirSync(`${CURRENT_DIR}/${projectName}`)
       process.stdout.write(
-        GREEN 
-        + `\nDirectory ${projectName} created!\n` 
-        + RESET_COL
+        GREENISH(`\nDirectory ${projectName} created!\n`)
       )
       
     } catch (err) {
       console.error(
-        RED 
-        + `\nFailed to create ${projectName} project dir ↴\n` 
-        + err.message 
-        + RESET_COL
+        REDISH(`\nFailed to create ${projectName} project dir ↴\n`)
+        + REDISH(err.message)
       )
       return
     }    
@@ -62,16 +62,12 @@ function createDirectoryContents (templatePath, newProjectPath) {
   try {
     filesToCreate = fs.readdirSync(templatePath)
     process.stdout.write(
-      GREEN 
-      + `Copying template files...\n` 
-      + RESET_COL
+      GREENISH(`Copying template files...\n`)
     )
   } catch (err) {
     console.error(
-      RED 
-      + `\nNot a valid template, ${templatePath} must be a folder ↴\n` 
-      + err.message 
-      + RESET_COL
+      REDISH(`\nNot a valid template, ${templatePath} must be a folder ↴\n`)
+      + REDISH(err.message )
     )
     return
   }
@@ -88,10 +84,8 @@ function createDirectoryContents (templatePath, newProjectPath) {
         contents = fs.readFileSync(origFilePath, 'utf8')
       } catch (err) {
         console.error(
-          RED 
-          + `\nFailed to read ${origFilePath} file ↴\n` 
-          + err.message 
-          + RESET_COL
+          REDISH(`\nFailed to read ${origFilePath} file ↴\n`)
+          + REDISH(err.message)
         )
       }
       
@@ -100,19 +94,14 @@ function createDirectoryContents (templatePath, newProjectPath) {
       try {
         fs.writeFileSync(writePath, contents, 'utf8')
         console.log(
-          GREEN
-          + ' -> '
-          + BLUE
-          + writePath 
-          + RESET_COL
+          GREENISH(' -> ')
+          + BLUEISH(writePath) 
           + ' file created.'
         )
       } catch (err) {
         console.error(
-          RED 
-          + `\nFailed to create ${writePath} file ↴\n` 
-          + err.message 
-          + RESET_COL
+          REDISH(`\nFailed to create ${writePath} file ↴\n`)
+          + REDISH(err.message)
         )
       }
       
@@ -120,19 +109,14 @@ function createDirectoryContents (templatePath, newProjectPath) {
       try {
         fs.mkdirSync(`${CURRENT_DIR}/${newProjectPath}/${file}`)
         console.log(
-          GREEN
-          + ' -> '
-          + BLUE
-          + newProjectPath 
-          + RESET_COL
+          GREENISH(' -> ')
+          + BLUEISH(newProjectPath)
           + ' directory created.'
         )
       } catch (err) {
         console.error(
-          RED 
-          + `\nFailed to create ${newProjectPath} template dir ↴\n` 
-          + err.message 
-          + RESET_COL
+          REDISH(`\nFailed to create ${newProjectPath} template dir ↴\n`)
+          + REDISH(err.message)
         )
       }
       
