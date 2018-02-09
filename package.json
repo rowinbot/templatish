@@ -4,8 +4,8 @@
   "description": "Template generator easy to customize",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "pretty": "prettier --single-quote --no-semi --trailing-comma es5 --write '*.js'",
+    "start": "node bin/index.js",
+    "pretty": "prettier --single-quote --no-semi --trailing-comma es5 --write \"./**/*.js\"",
     "patch-release": "npm version patch && npm publish && git push --follow-tags"
   },
   "repository": {
@@ -26,7 +26,8 @@
   },
   "homepage": "https://github.com/rowinbot/templatish#readme",
   "dependencies": {
-    "inquirer": "^5.1.0"
+    "inquirer": "^5.1.0",
+    "prompt-confirm": "^1.2.0"
   },
   "bin": {
     "templatish": "index.js"
