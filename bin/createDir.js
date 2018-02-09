@@ -14,16 +14,17 @@ const CURRENT_DIR = process.cwd()
 
 const createDirectoryContents = (templatePath, newProjectPath, options) => {
   var filesToCreate
-  
-  process.env['PROJECT_NAME'] = options['project-name'] || "undefined"
+
+  process.env['PROJECT_NAME'] = options['project-name'] || 'undefined'
 
   try {
     filesToCreate = fs.readdirSync(templatePath)
     process.stdout.write(BLUEISH(`\n-> Copying template files...\n\n`))
   } catch (err) {
     console.error(
-      REDISH(`\n-> Not a valid template, ${templatePath} must be a folder ↴\n`) +
-        REDISH(err.message)
+      REDISH(
+        `\n-> Not a valid template, ${templatePath} must be a folder ↴\n`
+      ) + REDISH(err.message)
     )
     return
   }
@@ -34,7 +35,7 @@ const createDirectoryContents = (templatePath, newProjectPath, options) => {
     //- Current "object" data.
     const stats = fs.statSync(origFilePath)
 
-    if (( stats.isFile() ) && ( object !== "template.js" )) {
+    if (stats.isFile() && object !== 'template.js') {
       //- If "object" is indeed a file this will get it contents
       var contents
       try {
