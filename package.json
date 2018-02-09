@@ -1,6 +1,6 @@
 {
   "name": "templatish",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Template generator easy to customize",
   "main": "index.js",
   "scripts": {
