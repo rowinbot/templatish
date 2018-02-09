@@ -30,7 +30,7 @@
     "prompt-confirm": "^1.2.0"
   },
   "bin": {
-    "templatish": "index.js"
+    "templatish": "bin/index.js"
   },
   "devDependencies": {
     "prettier": "1.10.2"
