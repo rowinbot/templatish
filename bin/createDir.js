@@ -35,8 +35,8 @@ const createDirectoryContents = (templatePath, newProjectPath, options) => {
     //- Current "object" data.
     const stats = fs.statSync(origFilePath)
 
-    if (stats.isFile() && object !== 'template.js') {
-      //- If "object" is indeed a file this will get it contents
+    if (stats.isFile() && object !== 'template.json') {
+      //- If "object" is indeed a file this will get it contents.
       var contents
       try {
         contents = fs.readFileSync(origFilePath, 'utf8')
@@ -47,11 +47,13 @@ const createDirectoryContents = (templatePath, newProjectPath, options) => {
         )
       }
 
-      /*- Just keep tailing those matchers until we fill the whole file.
-        - this functions lives inside of bin/shared dir! -*/
-      contents = matchEnvVars(contents)
+      /*- These matchers make sure 
+        - the template file gets: ↓↓↓
+        • Enviromental Variables (used ones).
+        • Template Parameters (used ones). -*/
+      contents = matchEnvVars(matchProps(contents, options))
 
-      //- Where template file will be created (inside the generated project)
+      //- Where template fileswill be created (inside the generated project).
       const writePath = `${CURRENT_DIR}/${newProjectPath}/${object}`
 
       try {
@@ -76,7 +78,7 @@ const createDirectoryContents = (templatePath, newProjectPath, options) => {
         )
       }
 
-      // recursive call
+      // Recursive call.
       createDirectoryContents(
         `${templatePath}/${object}`,
         `${newProjectPath}/${object}`,

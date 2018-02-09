@@ -1,4 +1,4 @@
 {
   "name": "%PROJECT_NAME%",
-  "version": "0.0.1"
+  "version": "%version_prop%"
 }

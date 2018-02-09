@@ -19,16 +19,15 @@ const matchEnvVars = fileStr => {
   - matched key with a template property -*/
 const matchProps = (fileStr, props) => {
   //- Matches every %[whatever]_prop% (note suffix: _prop)
-  var strAry = contents.match(/\w+(_[pP]rop%)/g)
+  var strAry = fileStr.match(/%\w+(_[pP]rop%)/g)
 
   for (var position in strAry) {
-    const prop = strAry[position].replace(/%/g, '').replace(/(_[pP]rop%)/g, '')
-
+    const prop = strAry[position].replace(/%/g, '').replace(/(_[pP]rop)/g, '')
     if (props[prop] !== undefined) {
       fileStr = fileStr.replace(strAry[position], props[prop])
     }
   }
-
+  
   return fileStr
 }
 

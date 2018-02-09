@@ -1,0 +1,6 @@
+{
+  "version": {
+    "type": "input",
+    "message": "Project version:"
+  }
+}
