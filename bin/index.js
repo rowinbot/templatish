@@ -44,25 +44,40 @@ inquirer.prompt(QUESTIONS).then(answers => {
     templatePath = `${__dirname}/../templates/${projectChoice}`
 
   const projectPath = `${CURRENT_DIR}/${projectName}`
+  
+})
+
   try {
+    //- Try to make the project directory using {projectName} on current path
     fs.mkdirSync(projectPath)
+    
     process.stdout.write(GREENISH(`\n-> Directory ${projectName} created!\n`))
+    
+    //- Try to populate the new project directory
     createDirectoryContents(templatePath, projectName, answers)
   } catch (err) {
+    /*- If there were any errors, check if the error 
+      - is that the directory was already been created. -*/
     if (err.code == 'EEXIST') {
+      //- If so... Ask to overwrite it.
       new Confirm(`Are you okay with overwriting ${GREENISH(projectPath)} dir?`).ask(
         function(yes) {
           if (yes) {
+            //- If overwriting is true, then it will start to overwrite
             removeDirectory(projectPath, true)
               .then(payload => {
+                //- Removed (old project directory)
                 console.log(GREENISH('\n-> Successfully overwriten'))
                 try {
+                  //- Try again to make the project directory
                   fs.mkdirSync(projectPath)
                   process.stdout.write(
                     GREENISH(`-> Directory ${projectName} created!\n`)
                   )
+                  //- Try to populate the new project directory
                   createDirectoryContents(templatePath, projectName, answers)
                 } catch (error) {
+                  //- Unable to create and cancel the command...
                   console.error(
                     REDISH(
                       `\n-> Failed to create ${projectName} project dir ↴\n`
@@ -71,21 +86,27 @@ inquirer.prompt(QUESTIONS).then(answers => {
                 }
               })
               .catch(error => {
+                //- Unable to remove the old project directory
                 console.log(error)
                 console.error(
                   REDISH(`\n-> Unable to remove ${projectName} dir :( ↴\n`) +
                     REDISH(error.message)
                 )
               })
+          } else if(!yes) {
+            //- If he doesn't want us to remove the old directory, cancel the command...
+            console.error(
+              REDISH(`\n-> Failed to create ${projectName} project dir ↴\n`) +
+                REDISH(err.message)
+            )
           }
-          return
         }
       )
     } else {
+      //- If the error was anything else just cancel the command and log what the hell happened.
       console.error(
         REDISH(`\n-> Failed to create ${projectName} project dir ↴\n`) +
           REDISH(err.message)
       )
     }
   }
-})
