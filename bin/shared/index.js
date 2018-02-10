@@ -27,7 +27,7 @@ const matchProps = (fileStr, props) => {
       fileStr = fileStr.replace(strAry[position], props[prop])
     }
   }
-  
+
   return fileStr
 }
 

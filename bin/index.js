@@ -3,6 +3,7 @@
 const Confirm = require('prompt-confirm')
 const inquirer = require('inquirer')
 const fs = require('fs')
+const utils = require('./utils')
 
 const createDirectoryContents = require('./createDir')
 const removeDirectory = require('./removeDir')
@@ -86,11 +87,11 @@ inquirer.prompt(QUESTIONS).then(answers => {
               if (options !== undefined && options instanceof Array) {
                 // Delete unnecesary items.
                 delete item['switch']
-                
+
                 // Set inquirer data properties.
                 item['name'] = property
                 item['choices'] = options
-                item['type'] = "list"
+                item['type'] = 'list'
 
                 //- Load the data into our options object to present a inquirer dialog.
                 templateQuestions.push(item)
@@ -105,11 +106,11 @@ inquirer.prompt(QUESTIONS).then(answers => {
               // Set inquirer data properties.
               item['choices'] = item['switch']
               item['name'] = property
-              item['type'] = "list"
-              
+              item['type'] = 'list'
+
               // Delete unnecesary items.
               delete item['switch']
-              
+
               //- Load the data into our options object to present a inquirer dialog.
               templateQuestions.push(item)
             }
@@ -117,18 +118,18 @@ inquirer.prompt(QUESTIONS).then(answers => {
             //-- INPUT TYPE --//
             item['name'] = property
             delete item['switch']
-            
+
             //- Load the data into our options (if object > 0) to present a inquirer dialog.
             if (Object.keys(item).length > 0) templateQuestions.push(item)
           }
         }
       }
-      
+
       /*- With the mapped data ask user for template properties -*/
       inquirer.prompt(templateQuestions).then(templateAnswers => {
         /*- Asign template properties and generator properties to projectProperties -*/
         projectProperties = Object.assign({}, templateAnswers, answers)
-        
+
         /*- Init project creation -*/
         createDir()
       })
@@ -170,7 +171,11 @@ const createDir = () => {
                   GREENISH(`-> Directory ${projectName} created!\n`)
                 )
                 //- Try to populate the new project directory
-                createDirectoryContents(templatePath, projectName, projectProperties)
+                createDirectoryContents(
+                  templatePath,
+                  projectName,
+                  projectProperties
+                )
               } catch (error) {
                 //- Unable to create and cancel the command...
                 console.error(
